@@ -43,9 +43,10 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
 
   // selection on algo
   TString c_algo_wp;
+  /*
   if (algo == "lsf") { 
     if (wp == "test") { c_algo_wp = "(AK8Puppijet1_lsfC_3>0.7)"; } // pass is > 0.7
-  }
+  } */
   if (algo == "n2") {
     if (wp == "hbb") { c_algo_wp = "(AK8Puppijet0_N2DDT<0)"; } // pass is < 0. 
   }
