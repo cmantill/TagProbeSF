@@ -1,6 +1,7 @@
 #!/bin/bash
 object=$1
 algo=$2
+wp=$3
 
 declare -a ptranges
 ptranges=("low" "lowmed" "med")
