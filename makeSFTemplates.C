@@ -27,8 +27,8 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
   gStyle->SetPalette(1);
   TH1::SetDefaultSumw2(kTRUE);
 
-  TFile *f_mc   = TFile::Open("PseudoData.root" , "READONLY" );
-  TFile *f_data = TFile::Open("Data.root" , "READONLY" );
+  TFile *f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/sklimWtagAK8v12017WP026/PseudoData_AK8v12017WP026.root" , "READONLY" );
+  TFile *f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/sklimWtagAK8v12017WP026/Data_AK8v12017WP026.root" , "READONLY" );
   TTree *t_mc   = (TTree*)f_mc->Get("Events");
   TTree *t_data = (TTree*)f_data->Get("Events");
   
