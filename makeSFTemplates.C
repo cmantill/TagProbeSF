@@ -131,7 +131,7 @@ TH1D *create1Dhisto(TString sample,TTree *tree,TString intLumi,TString cuts,TStr
   if (data) { cut ="("+cuts+")"; } 
   else {
     //cut ="(xsecWeight*puWeight*"+intLumi+")*("+cuts+")";
-    cut ="("+intLumi+")*("+cuts+")";
+    cut ="(weight*"+intLumi+")*("+cuts+")";
   }
   
   std::cout << "cut = " << cut << "\n";
