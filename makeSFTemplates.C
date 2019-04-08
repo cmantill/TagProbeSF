@@ -48,18 +48,18 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
     if (wp == "test") { c_algo_wp = "(AK8Puppijet1_lsfC_3>0.7)"; } // pass is > 0.7
   } */
   if (algo == "n2") {
-    if (wp == "hbb") { c_algo_wp = "(AK8Puppijet0_N2DDT<0)"; } // pass is < 0. 
+    if (wp == "hbb") { c_algo_wp = "(Puppijet0_N2DDT<0)"; } // pass is < 0. 
   }
 
   // mass selection
-  TString c_mass = "(AK8Puppijet0_msd>50. && AK8Puppijet0_msd<110.)";
+  TString c_mass = "(Puppijet0_msd>50. && Puppijet0_msd<110.)";
   
   // pt range
   TString c_ptrange;
   //if ( ((TString)object=="T") && (ptrange == "incl") )   { c_ptrange = "(AK8Puppijet0_pt>300.)"; }
   //if ( ((TString)object=="T") && (ptrange == "low") )    { c_ptrange = "(AK8Puppijet0_pt>300. && AK8Puppijet0_pt<=400.)";  }
   //if ( ((TString)object=="T") && (ptrange == "med") )    { c_ptrange = "(AK8Puppijet0_pt>400. && AK8Puppijet0_pt<=600.)";  }
-  c_ptrange = "(AK8Puppijet0_pt>300.)";
+  c_ptrange = "(Puppijet0_pt>300.)";
 
 
 
@@ -68,7 +68,7 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
   else      { c_algo_wp = "!("+c_algo_wp+")"; }
 
   // matching definition: modify!!
-  TString c_p2 = "( AK8Puppijet0_vMatching < 0.8 && AK8Puppijet0_isHadronicV==1 && AK8Puppijet0_vMatching > 0.)";
+  TString c_p2 = "( Puppijet0_vMatching < 0.8 && Puppijet0_isHadronicV==1 && Puppijet0_vMatching > 0.)";
   TString c_p1 = "(!("+c_p2+"))";
 
   // final set of cuts
