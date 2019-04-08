@@ -36,7 +36,7 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
   samples.push_back(t_mc);
   samples.push_back(t_data);
 
-  float intLumi     = 36.9;
+  float intLumi     = 41.1;
   ostringstream tmpLumi;
   tmpLumi << intLumi;
   TString lumi = tmpLumi.str();
@@ -52,27 +52,31 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
   }
 
   // mass selection
-  TString c_mass = "(AK8Puppijet0_msd>50. && AK8Puppijet0_msd<250.)";
+  TString c_mass = "(AK8Puppijet0_msd>50. && AK8Puppijet0_msd<110.)";
   
   // pt range
   TString c_ptrange;
-  if ( ((TString)object=="T") && (ptrange == "incl") )   { c_ptrange = "(AK8Puppijet0_pt>300.)"; }
-  if ( ((TString)object=="T") && (ptrange == "low") )    { c_ptrange = "(AK8Puppijet0_pt>300. && AK8Puppijet0_pt<=400.)";  }
-  if ( ((TString)object=="T") && (ptrange == "med") )    { c_ptrange = "(AK8Puppijet0_pt>400. && AK8Puppijet0_pt<=600.)";  }
+  //if ( ((TString)object=="T") && (ptrange == "incl") )   { c_ptrange = "(AK8Puppijet0_pt>300.)"; }
+  //if ( ((TString)object=="T") && (ptrange == "low") )    { c_ptrange = "(AK8Puppijet0_pt>300. && AK8Puppijet0_pt<=400.)";  }
+  //if ( ((TString)object=="T") && (ptrange == "med") )    { c_ptrange = "(AK8Puppijet0_pt>400. && AK8Puppijet0_pt<=600.)";  }
+  c_ptrange = "(AK8Puppijet0_pt>300.)";
+
+
 
   // pass or fail tagging score
   if (pass) { c_algo_wp = "("+c_algo_wp+")";  }
   else      { c_algo_wp = "!("+c_algo_wp+")"; }
 
   // matching definition: modify!!
-  TString c_p2 = "( ((AK8Puppijet1_lepCId==13&&AK8Puppijet1_isHadronicV==12)||(AK8Puppijet1_lepCId==11&&AK8Puppijet1_isHadronicV==11)) && AK8Puppijet1_vSize<0.8 )";
-  TString c_p1 = "(!("+c_p3+" || "+c_p2+"))";
+  TString c_p2 = "( AK8Puppijet0_vMatching < 0.8 && AK8Puppijet0_isHadronicV==1 && AK8Puppijet0_vMatching > 0.)";
+  TString c_p1 = "(!("+c_p2+"))";
 
   // final set of cuts
-  TString cut = c_base+" && "+c_algo_wp+" && "+c_mass+" && "+c_ptrange; std::cout << cut << "\n";
+  //TString cut = c_base+" && "+c_algo_wp+" && "+c_mass+" && "+c_ptrange; std::cout << cut << "\n";
+  TString cut = c_algo_wp+" && "+c_mass+" && "+c_ptrange; std::cout << cut << "\n";
+
   std::vector<TString> cuts; cuts.clear();
   cuts.push_back(cut);
-  cuts.push_back(cut+" && "+c_p3);
   cuts.push_back(cut+" && "+c_p2);
   cuts.push_back(cut+" && "+c_p1);
 
