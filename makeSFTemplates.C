@@ -29,8 +29,8 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
 
   TFile *f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/sklimWtagAK8v12017WP026/PseudoData_AK8v12017WP026.root" , "READONLY" );
   TFile *f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/sklimWtagAK8v12017WP026/Data_AK8v12017WP026.root" , "READONLY" );
-  TTree *t_mc   = (TTree*)f_mc->Get("Events");
-  TTree *t_data = (TTree*)f_data->Get("Events");
+  TTree *t_mc   = (TTree*)f_mc->Get("otree2");
+  TTree *t_data = (TTree*)f_data->Get("otree2");
   
   std::vector<TTree *> samples; samples.clear();
   samples.push_back(t_mc);

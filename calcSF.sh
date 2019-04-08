@@ -5,7 +5,8 @@ wp=$3
 
 declare -a ptranges
 #ptranges=("low" "lowmed" "med")
-ptranges=("low")
+#ptranges=("low")
+ptranges=("incl")
 
 workdir=${object}"_"${algo}
 mkdir ${workdir}
