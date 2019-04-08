@@ -86,11 +86,11 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
   leg_sample.push_back("Data");
 
   // create histos
-  TH1D *h_incl = create1Dhisto(name,samples[0],lumi,cuts[0],"AK8_0_mass",20,50.,110.,false,1,1,"h_"+name+"_incl",false,false);      h_incl->SetFillColor(0);
-  TH1D *h_p2   = create1Dhisto(name,samples[0],lumi,cuts[1],"AK8_0_mass",20,50.,110.,false,kRed+1,1,"h_"+name+"_p2",false,false);   h_p2->SetFillColor(0);
-  TH1D *h_p1   = create1Dhisto(name,samples[0],lumi,cuts[2],"AK8_0_mass",20,50.,110.,false,kGreen-1,1,"h_"+name+"_p1",false,false); h_p1->SetFillColor(0);
+  TH1D *h_incl = create1Dhisto(name,samples[0],lumi,cuts[0],"Puppijet0_msd",20,50.,110.,false,1,1,"h_"+name+"_incl",false,false);      h_incl->SetFillColor(0);
+  TH1D *h_p2   = create1Dhisto(name,samples[0],lumi,cuts[1],"Puppijet0_msd",20,50.,110.,false,kRed+1,1,"h_"+name+"_p2",false,false);   h_p2->SetFillColor(0);
+  TH1D *h_p1   = create1Dhisto(name,samples[0],lumi,cuts[2],"Puppijet0_msd",20,50.,110.,false,kGreen-1,1,"h_"+name+"_p1",false,false); h_p1->SetFillColor(0);
 
-  TH1D *h_data = create1Dhisto(name,samples[1],lumi,cuts[0],"AK8_0_mass",20,50.,110.,false,1,1,"h_"+name+"_data",false,true); h_data->SetFillColor(0);
+  TH1D *h_data = create1Dhisto(name,samples[1],lumi,cuts[0],"Puppijet0_msd",20,50.,110.,false,1,1,"h_"+name+"_data",false,true); h_data->SetFillColor(0);
 
 
   h_data->SetMarkerColor(1); h_data->SetMarkerSize(1.2); h_data->SetMarkerStyle(20);
