@@ -35,7 +35,7 @@ do
     echo "run the tag and probe"
     if [ ${object} == "T" ];
     then
-	text2workspace.py -m 125 -P HiggsAnalysis.CombinedLimit.TagAndProbeExtended:tagAndProbe sf.txt --PO categories=catp3,catp2,catp1
+	text2workspace.py -m 125 -P HiggsAnalysis.CombinedLimit.TagAndProbeExtended:tagAndProbe sf.txt --PO categories=catp2,catp1
     elif [ ${object} == "W" ];
     then	
 	text2workspace.py -m 125 -P HiggsAnalysis.CombinedLimit.TagAndProbeExtended:tagAndProbe sf.txt --PO categories=catp2,catp1
@@ -48,6 +48,6 @@ do
     mv fitDiagnostics.root sf"_"fitDiagnostics"_"${inputname}".root"
     mv sf.txt sf"_"datacard"_"${inputname}".txt"
     cd ../
-    cmdmake=$(echo 'makePlots.C("'${workdir}'","'${inputname}'","'${wp}'","'${ptrange}'",'50.','250.','20',"mass")')
+    cmdmake=$(echo 'makePlots.C("'${workdir}'","'${inputname}'","'${wp}'","'${ptrange}'",'50.','110.','20',"mass")')
     root -l -q ${cmdmake}
 done

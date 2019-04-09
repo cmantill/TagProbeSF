@@ -10,7 +10,7 @@ void makeSFDatacard(std::string inputname) {
   TH1D  *h_catp1_fail = (TH1D*)ffail->Get("catp1");
 
   std::cout << "imax 2  number of channels\n";
-  std::cout << "jmax 2  number of backgrounds\n";
+  std::cout << "jmax 1  number of backgrounds\n";
   std::cout << "kmax *  number of nuisance parameters (sources of systematical uncertainties)\n";
   std::cout << "------------\n";
   std::cout << "shapes  *  pass   " << inputname << "_pass.root  $PROCESS $PROCESS_$SYSTEMATIC\n";
