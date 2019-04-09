@@ -97,10 +97,10 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
   h_data->SetLineWidth(1);
 
   //pileup systematics
-  TH1D *h_p2_puup = create1Dhisto(name,samples[0],lumi,cuts[1],Puppijet0_msd,20,50.,110.,false,kRed+1,1,"h_"+name+"_p2_puup",false,false);   h_p2_puup->SetFillColor(0);
-  TH1D *h_p1_puup = create1Dhisto(name,samples[0],lumi,cuts[2],Puppijet0_msd,20,50.,110.,false,kGreen-1,1,"h_"+name+"_p1_puup",false,false); h_p1_puup->SetFillColor(0);
-  TH1D *h_p2_pudn = create1Dhisto(name,samples[0],lumi,cuts[1],Puppijet0_msd,20,50.,110.,false,kRed+1,1,"h_"+name+"_p2_pudn",false,false);   h_p2_pudn->SetFillColor(0);
-  TH1D *h_p1_pudn = create1Dhisto(name,samples[0],lumi,cuts[2],Puppijet0_msd,20,50.,110.,false,kGreen-1,1,"h_"+name+"_p1_pudn",false,false); h_p1_pudn->SetFillColor(0);
+  TH1D *h_p2_puup = create1Dhisto(name,samples[0],lumi,cuts[1],"Puppijet0_msd",20,50.,110.,false,kRed+1,1,"h_"+name+"_p2_puup",false,false);   h_p2_puup->SetFillColor(0);
+  TH1D *h_p1_puup = create1Dhisto(name,samples[0],lumi,cuts[2],"Puppijet0_msd",20,50.,110.,false,kGreen-1,1,"h_"+name+"_p1_puup",false,false); h_p1_puup->SetFillColor(0);
+  TH1D *h_p2_pudn = create1Dhisto(name,samples[0],lumi,cuts[1],"Puppijet0_msd",20,50.,110.,false,kRed+1,1,"h_"+name+"_p2_pudn",false,false);   h_p2_pudn->SetFillColor(0);
+  TH1D *h_p1_pudn = create1Dhisto(name,samples[0],lumi,cuts[2],"Puppijet0_msd",20,50.,110.,false,kGreen-1,1,"h_"+name+"_p1_pudn",false,false); h_p1_pudn->SetFillColor(0);
   // avoid zero bins in mc
   for (unsigned int ii=0; ii<h_incl->GetNbinsX(); ++ii) {
     if (h_p2->GetBinContent(ii)<=0) { h_p2->SetBinContent(ii,0.001); h_p2->SetBinError(ii,0.001); }
