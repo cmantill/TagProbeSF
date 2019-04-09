@@ -96,17 +96,32 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
   h_data->SetMarkerColor(1); h_data->SetMarkerSize(1.2); h_data->SetMarkerStyle(20);
   h_data->SetLineWidth(1);
 
+  //pileup systematics
+  TH1D *h_p2_puup = create1Dhisto(name,samples[0],lumi,cuts[1],c_jet+"_1_mass",20,50.,110.,false,kRed+1,1,"h_"+name+"_p2_puup",false,false);   h_p2_puup->SetFillColor(0);
+  TH1D *h_p1_puup = create1Dhisto(name,samples[0],lumi,cuts[2],c_jet+"_1_mass",20,50.,110.,false,kGreen-1,1,"h_"+name+"_p1_puup",false,false); h_p1_puup->SetFillColor(0);
+  TH1D *h_p2_pudn = create1Dhisto(name,samples[0],lumi,cuts[1],c_jet+"_1_mass",20,50.,110.,false,kRed+1,1,"h_"+name+"_p2_pudn",false,false);   h_p2_pudn->SetFillColor(0);
+  TH1D *h_p1_pudn = create1Dhisto(name,samples[0],lumi,cuts[2],c_jet+"_1_mass",20,50.,110.,false,kGreen-1,1,"h_"+name+"_p1_pudn",false,false); h_p1_pudn->SetFillColor(0);
   // avoid zero bins in mc
   for (unsigned int ii=0; ii<h_incl->GetNbinsX(); ++ii) {
     if (h_p2->GetBinContent(ii)<=0) { h_p2->SetBinContent(ii,0.001); h_p2->SetBinError(ii,0.001); }
     if (h_p1->GetBinContent(ii)<=0) { h_p1->SetBinContent(ii,0.001); h_p1->SetBinError(ii,0.001); }
+    if (h_p2_puup->GetBinContent(ii)<=0) { h_p2_puup->SetBinContent(ii,0.001); h_p2_puup->SetBinError(ii,0.001); }
+    if (h_p1_puup->GetBinContent(ii)<=0) { h_p1_puup->SetBinContent(ii,0.001); h_p1_puup->SetBinError(ii,0.001); }
+    if (h_p2_pudn->GetBinContent(ii)<=0) { h_p2_pudn->SetBinContent(ii,0.001); h_p2_pudn->SetBinError(ii,0.001); }
+    if (h_p1_pudn->GetBinContent(ii)<=0) { h_p1_pudn->SetBinContent(ii,0.001); h_p1_pudn->SetBinError(ii,0.001); }
+
   }
 
   TString xname = "m_{SD} [GeV]";
   h_p2->GetXaxis()->SetTitle(xname);
   h_p1->GetXaxis()->SetTitle(xname);
   h_data->GetXaxis()->SetTitle(xname);
-  
+ 
+  h_p2_puup->GetXaxis()->SetTitle((TString)xname);
+  h_p1_puup->GetXaxis()->SetTitle((TString)xname);
+  h_p2_pudn->GetXaxis()->SetTitle((TString)xname);
+  h_p1_pudn->GetXaxis()->SetTitle((TString)xname);
+ 
   // make dir
   TString dirname1 = object+"_"+algo;
   const int dir_err = system("mkdir -p ./"+dirname1);
@@ -118,6 +133,15 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
   h_p2->Write("catp2");
   h_p1->Write("catp1");
   h_data->Write("data_obs");
+
+  h_p2_puup->Write("catp2_puUp");
+  h_p1_puup->Write("catp1_puUp");
+  h_p2_pudn->Write("catp2_puDown");
+  h_p1_pudn->Write("catp1_puDown");
+
+
+
+
   fout->Close();
   std::cout << "\n\n";
 }
