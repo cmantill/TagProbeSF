@@ -32,13 +32,13 @@ do
     sed -n -i '3,$ p' sf.txt
     
     ## do the tag and probe
-    echo "run the tag an probe"
+    echo "run the tag and probe"
     if [ ${object} == "T" ];
     then
 	text2workspace.py -m 125 -P HiggsAnalysis.CombinedLimit.TagAndProbeExtended:tagAndProbe sf.txt --PO categories=catp3,catp2,catp1
     elif [ ${object} == "W" ];
     then	
-	text2workspace.py -m 125 -P HiggsAnalysis.CombinedLimit.TagAndProbeExtended:tagAndProbe sf.txt --PO categories=catp2,catp3,catp1
+	text2workspace.py -m 125 -P HiggsAnalysis.CombinedLimit.TagAndProbeExtended:tagAndProbe sf.txt --PO categories=catp2,catp1
     fi
     mv sf.root sf"_"${inputname}".root"
     echo "Do the MultiDimFit"
