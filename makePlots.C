@@ -136,7 +136,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pt_preliminary->SetTextSize(0.06);
 
   TLatex pt_lumi;
-  const char *longstring = "35.9 fb^{-1} (13 TeV)";
+  const char *longstring = "41.1 fb^{-1} (13 TeV)";
   pt_lumi.SetTextSize(0.07);
   pt_lumi.SetTextFont(42);
   
@@ -319,7 +319,7 @@ void getSFSummary(TString object, TString wp) {
   pt_preliminary->SetTextSize(0.06);
 
   TLatex pt_lumi;
-  const char *longstring = "35.9 fb^{-1} (13 TeV)";
+  const char *longstring = "41.1 fb^{-1} (13 TeV)";
   pt_lumi.SetTextSize(0.07);
   pt_lumi.SetTextFont(42);
 
