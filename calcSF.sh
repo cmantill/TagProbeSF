@@ -20,7 +20,12 @@ do
     cmdfail=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'",false)')
     root -l -q ${cmdpass}
     root -l -q ${cmdfail}
-    
+
+    ## add scale and smear
+    inputname=${object}"_"${algo}"_"${wp}"_"${ptrange}
+    python makeSmearShift.py --ifile ${workdir}/${inputname}_pass_pre.root
+    python makeSmearShift.py --ifile ${workdir}/${inputname}_fail_pre.root
+
     ## make datacard
     echo "make datacard"
     echo " "

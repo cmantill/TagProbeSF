@@ -31,8 +31,11 @@ void makeSFDatacard(std::string inputname) {
 	    << h_catp2_pass->Integral(1,h_catp2_pass->GetNbinsX()) << " " << h_catp1_pass->Integral(1,h_catp1_pass->GetNbinsX()) << " "
 	    << h_catp2_fail->Integral(1,h_catp2_fail->GetNbinsX()) << " " << h_catp1_fail->Integral(1,h_catp1_fail->GetNbinsX()) << "\n";
   std::cout << "------------\n";
-  std::cout << "lumi    lnN    1.025  1.025  1.025  1.025\n";
-  std::cout << "pu     shape     1      1      1      1  \n";
+  std::cout << "lumi    lnN    1.023  1.023  1.023  1.023\n";
+  std::cout << "jecs    lnN    1.02   1.02   1.02   1.02 \n";
+  std::cout << "pu      lnN    1.05   1.05   1.05   1.05 \n";
+  std::cout << "scale  shapeU   0.1      -     0.1      -  \n";
+  std::cout << "smear  shapeU   0.5      -     0.5      -  \n";
   std::cout << "*  autoMCStats  0\n";
 
 }

@@ -87,20 +87,20 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
 
   // create histos
   TH1D *h_incl = create1Dhisto(name,samples[0],lumi,cuts[0],"Puppijet0_msd",20,50.,110.,false,1,1,"h_"+name+"_incl",false,false);      h_incl->SetFillColor(0);
-  TH1D *h_p2   = create1Dhisto(name,samples[0],lumi,cuts[1],"Puppijet0_msd",20,50.,110.,false,kRed+1,1,"h_"+name+"_p2",false,false);   h_p2->SetFillColor(0);
-  TH1D *h_p1   = create1Dhisto(name,samples[0],lumi,cuts[2],"Puppijet0_msd",20,50.,110.,false,kGreen-1,1,"h_"+name+"_p1",false,false); h_p1->SetFillColor(0);
+  TH1D *h_p2   = create1Dhisto(name,samples[0],lumi,cuts[1],"Puppijet0_msd",20,50.,110.,false,kRed+1,1,"catp2",false,false);   h_p2->SetFillColor(0);
+  TH1D *h_p1   = create1Dhisto(name,samples[0],lumi,cuts[2],"Puppijet0_msd",20,50.,110.,false,kGreen-1,1,"catp1",false,false); h_p1->SetFillColor(0);
 
-  TH1D *h_data = create1Dhisto(name,samples[1],lumi,cuts[0],"Puppijet0_msd",20,50.,110.,false,1,1,"h_"+name+"_data",false,true); h_data->SetFillColor(0);
+  TH1D *h_data = create1Dhisto(name,samples[1],lumi,cuts[0],"Puppijet0_msd",20,50.,110.,false,1,1,"data_obs",false,true); h_data->SetFillColor(0);
 
 
   h_data->SetMarkerColor(1); h_data->SetMarkerSize(1.2); h_data->SetMarkerStyle(20);
   h_data->SetLineWidth(1);
 
   //pileup systematics
-  TH1D *h_p2_puup = create1Dhisto(name,samples[0],lumi,cuts[1],"Puppijet0_msd",20,50.,110.,false,kRed+1,1,"h_"+name+"_p2_puup",false,false);   h_p2_puup->SetFillColor(0);
-  TH1D *h_p1_puup = create1Dhisto(name,samples[0],lumi,cuts[2],"Puppijet0_msd",20,50.,110.,false,kGreen-1,1,"h_"+name+"_p1_puup",false,false); h_p1_puup->SetFillColor(0);
-  TH1D *h_p2_pudn = create1Dhisto(name,samples[0],lumi,cuts[1],"Puppijet0_msd",20,50.,110.,false,kRed+1,1,"h_"+name+"_p2_pudn",false,false);   h_p2_pudn->SetFillColor(0);
-  TH1D *h_p1_pudn = create1Dhisto(name,samples[0],lumi,cuts[2],"Puppijet0_msd",20,50.,110.,false,kGreen-1,1,"h_"+name+"_p1_pudn",false,false); h_p1_pudn->SetFillColor(0);
+  TH1D *h_p2_puup = create1Dhisto(name,samples[0],lumi,cuts[1],"Puppijet0_msd",20,50.,110.,false,kRed+1,1,"catp2_puUp",false,false);   h_p2_puup->SetFillColor(0);
+  TH1D *h_p1_puup = create1Dhisto(name,samples[0],lumi,cuts[2],"Puppijet0_msd",20,50.,110.,false,kGreen-1,1,"catp1_puUp",false,false); h_p1_puup->SetFillColor(0);
+  TH1D *h_p2_pudn = create1Dhisto(name,samples[0],lumi,cuts[1],"Puppijet0_msd",20,50.,110.,false,kRed+1,1,"catp2_puDown",false,false);   h_p2_pudn->SetFillColor(0);
+  TH1D *h_p1_pudn = create1Dhisto(name,samples[0],lumi,cuts[2],"Puppijet0_msd",20,50.,110.,false,kGreen-1,1,"catp1_puDown",false,false); h_p1_pudn->SetFillColor(0);
   // avoid zero bins in mc
   for (unsigned int ii=0; ii<h_incl->GetNbinsX(); ++ii) {
     if (h_p2->GetBinContent(ii)<=0) { h_p2->SetBinContent(ii,0.001); h_p2->SetBinError(ii,0.001); }
@@ -127,20 +127,18 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
   const int dir_err = system("mkdir -p ./"+dirname1);
   if (-1 == dir_err) { printf("Error creating directory!n"); exit(1); }
 
-  TString nameoutfile = name+".root"; 
+  TString nameoutfile = name+"_pre.root"; 
+  //TString nameoutfile = name+".root";
   TFile *fout = new TFile("./"+dirname1+"/"+nameoutfile,"RECREATE");
 
-  h_p2->Write("catp2");
-  h_p1->Write("catp1");
-  h_data->Write("data_obs");
+  h_p2->Write();
+  h_p1->Write();
+  h_data->Write();
 
-  h_p2_puup->Write("catp2_puUp");
-  h_p1_puup->Write("catp1_puUp");
-  h_p2_pudn->Write("catp2_puDown");
-  h_p1_pudn->Write("catp1_puDown");
-
-
-
+  h_p2_puup->Write();
+  h_p1_puup->Write();
+  h_p2_pudn->Write();
+  h_p1_pudn->Write();
 
   fout->Close();
   std::cout << "\n\n";
