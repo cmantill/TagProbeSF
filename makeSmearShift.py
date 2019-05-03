@@ -77,16 +77,16 @@ def create(options):
     hmatched_new_central.SetName("catp2"); hmatched_new_central.SetTitle("catp2");
     
     # get shift up and down variations
-    mass_sigma = 10 # 1/mass_sigma goes in the datacard
-    mass_shift_unc = 0.01 * mass_sigma;
-    hmatchedsys_shift = hist_container.shift(hmatched_new_central, mass * mass_shift_unc)
+    #mass_sigma = 1000 # 1/mass_sigma goes in the datacard
+    #mass_shift_unc = 0.01 * mass_sigma;
+    hmatchedsys_shift = hist_container.shift(hmatched_new_central, 10)
     hmatchedsys_shift[0].SetName("catp2_scaleUp"); hmatchedsys_shift[0].SetTitle("catp2_scaleUp")
     hmatchedsys_shift[1].SetName("catp2_scaleDown");  hmatchedsys_shift[1].SetTitle("catp2_scaleDown");
 
     # get res up/down
-    res_sigma = 2 # 1/res_sigma goes in the datacard
-    res_shift_unc = 0.05 * res_sigma; 
-    hmatchedsys_smear = hist_container.smear(hmatched_new_central, res_shift_unc)
+    #res_sigma = 1000 # 1/res_sigma goes in the datacard
+    #res_shift_unc = 0.05 * res_sigma; 
+    hmatchedsys_smear = hist_container.smear(hmatched_new_central, 10)
     hmatchedsys_smear[0].SetName("catp2_smearUp"); hmatchedsys_smear[0].SetTitle("catp2_smearUp");
     hmatchedsys_smear[1].SetName("catp2_smearDown"); hmatchedsys_smear[1].SetTitle("catp2_smearDown");
 
