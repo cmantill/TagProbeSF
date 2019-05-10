@@ -16,10 +16,14 @@ for ptrange in "${ptranges[@]}";
 do
     ##make templates
     echo "make templates"
-    cmdpass=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'",true)')
-    cmdfail=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'",false)')
-    root -l -q ${cmdpass}
-    root -l -q ${cmdfail}
+    
+    # for old
+    # cmdpass=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'",true)')
+    # cmdfail=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'",false)')
+    # root -l -q ${cmdpass}
+    # root -l -q ${cmdfail}
+
+    # pre-templates done
 
     ## add scale and smear
     inputname=${object}"_"${algo}"_"${wp}"_"${ptrange}
@@ -49,6 +53,7 @@ do
     echo "Do the MultiDimFit"
     combine -M MultiDimFit -m 125 sf"_"${inputname}.root --algo=singles --robustFit=1 --cminDefaultMinimizerTolerance 5.
     echo "Run the FitDiagnostics"    
+    #combine -M FitDiagnostics -m 125 sf"_"${inputname}.root --saveShapes --saveWithUncertainties --robustFit=1 --cminDefaultMinimizerTolerance 5. -t -1 --setParameters scale=0.5
     combine -M FitDiagnostics -m 125 sf"_"${inputname}.root --saveShapes --saveWithUncertainties --robustFit=1 --cminDefaultMinimizerTolerance 5.
     mv fitDiagnostics.root sf"_"fitDiagnostics"_"${inputname}".root"
     mv sf.txt sf"_"datacard"_"${inputname}".txt"
