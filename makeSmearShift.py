@@ -68,7 +68,7 @@ def create(options):
     tmp_shifted_h = hist_container.shift( lHSig, shift_val);
 
     # smear (to measure mass resolution)
-    res_shift = 1.1
+    res_shift = 1.05
     smear_val = res_shift - 1.;
     tmp_smeared_h =  hist_container.smear( tmp_shifted_h[0] , smear_val)
 
@@ -84,9 +84,9 @@ def create(options):
     hmatchedsys_shift[1].SetName("catp2_scaleDown");  hmatchedsys_shift[1].SetTitle("catp2_scaleDown");
 
     # get res up/down
-    #res_sigma = 1000 # 1/res_sigma goes in the datacard
+    #res_sigma = 10 # 1/res_sigma goes in the datacard
     #res_shift_unc = 0.05 * res_sigma; 
-    hmatchedsys_smear = hist_container.smear(hmatched_new_central, 10)
+    hmatchedsys_smear = hist_container.smear(hmatched_new_central, 0.5)
     hmatchedsys_smear[0].SetName("catp2_smearUp"); hmatchedsys_smear[0].SetTitle("catp2_smearUp");
     hmatchedsys_smear[1].SetName("catp2_smearDown"); hmatchedsys_smear[1].SetTitle("catp2_smearDown");
 
