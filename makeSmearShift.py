@@ -68,7 +68,7 @@ def create(options):
     tmp_shifted_h = hist_container.shift( lHSig, shift_val);
 
     # smear (to measure mass resolution)
-    res_shift = 1.05
+    res_shift = 1.01
     smear_val = res_shift - 1.;
     tmp_smeared_h =  hist_container.smear( tmp_shifted_h[0] , smear_val)
 
