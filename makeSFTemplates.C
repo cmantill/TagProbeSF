@@ -27,8 +27,11 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
   gStyle->SetPalette(1);
   TH1::SetDefaultSumw2(kTRUE);
 
-  TFile *f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/sklimWtagAK8v12017WP026/PseudoData_AK8v12017WP026.root" , "READONLY" );
-  TFile *f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/sklimWtagAK8v12017WP026/Data_AK8v12017WP026.root" , "READONLY" );
+  //TFile *f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/sklimWtagAK8v12017WP026/PseudoData_AK8v12017WP026.root" , "READONLY" );
+  //TFile *f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/sklimWtagAK8v12017WP026/Data_AK8v12017WP026.root" , "READONLY" );
+  TFile *f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits04-vbf/PseudoData.root" , "READONLY" );
+  TFile *f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits04-vbf/Data.root" , "READONLY" );
+
   TTree *t_mc   = (TTree*)f_mc->Get("otree2");
   TTree *t_data = (TTree*)f_data->Get("otree2");
   
@@ -68,7 +71,8 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
   else      { c_algo_wp = "!("+c_algo_wp+")"; }
 
   // matching definition: modify!!
-  TString c_p2 = "( Puppijet0_vMatching < 0.8 && Puppijet0_isHadronicV==1 && Puppijet0_vMatching > 0.)";
+  //TString c_p2 = "( Puppijet0_vMatching < 0.8 && Puppijet0_isHadronicV==1 && Puppijet0_vMatching > 0.)";
+  TString c_p2 = "( Puppijet0_vMatching < 0.8 && (Puppijet0_isHadronicV==1 ||Puppijet0_isHadronicV==2) && Puppijet0_vMatching > 0.)";
   TString c_p1 = "(!("+c_p2+"))";
 
   // final set of cuts
