@@ -17,11 +17,11 @@ do
     ##make templates
     echo "make templates"
     
-    # for old
-    # cmdpass=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'",true)')
-    # cmdfail=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'",false)')
-    # root -l -q ${cmdpass}
-    # root -l -q ${cmdfail}
+    # for bacon skim -> comment this if the templates are already done in coffea
+    cmdpass=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'",true)')
+    cmdfail=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'",false)')
+    root -l -q ${cmdpass}
+    root -l -q ${cmdfail}
 
     # pre-templates done
 
@@ -29,6 +29,9 @@ do
     inputname=${object}"_"${algo}"_"${wp}"_"${ptrange}
     python makeSmearShift.py --ifile ${workdir}/${inputname}_pass_pre.root
     python makeSmearShift.py --ifile ${workdir}/${inputname}_fail_pre.root
+
+    #mv ${workdir}/${inputname}_pass_pre.root ${workdir}/${inputname}_pass.root
+    #mv ${workdir}/${inputname}_fail_pre.root ${workdir}/${inputname}_fail.root 
 
     ## make datacard
     echo "make datacard"
@@ -58,6 +61,9 @@ do
     mv fitDiagnostics.root sf"_"fitDiagnostics"_"${inputname}".root"
     mv sf.txt sf"_"datacard"_"${inputname}".txt"
     cd ../
-    cmdmake=$(echo 'makePlots.C("'${workdir}'","'${inputname}'","'${wp}'","'${ptrange}'",'50.','110.','20',"mass")')
+    # for the bacon templates
+    cmdmake=$(echo 'makePlots.C("'${workdir}'","'${inputname}'","'${wp}'","'${ptrange}'",'50.','110.','20',"mass")') 
+    # for the coffea templates
+    #cmdmake=$(echo 'makePlots.C("'${workdir}'","'${inputname}'","'${wp}'","'${ptrange}'",'50.','110.','15',"mass")') 
     root -l -q ${cmdmake}
 done
