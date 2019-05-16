@@ -163,20 +163,15 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   float maxyld = h_postfit_total->GetMaximum(); 
   if (h_prefit_total->GetMaximum()>h_postfit_total->GetMaximum()) { maxyld = h_prefit_total->GetMaximum(); }
   if (log) { gPad->SetLogy(); h_prefit_total->GetYaxis()->SetRangeUser(0.1,10.*maxyld); } else { h_prefit_total->GetYaxis()->SetRangeUser(0.,1.8*maxyld); }
-  if (log) { gPad->SetLogy(); h_postfit_total->GetYaxis()->SetRangeUser(0.1,10.*maxyld); } else { h_postfit_total->GetYaxis()->SetRangeUser(0.,1.8*maxyld); }
   h_prefit_total->GetXaxis()->SetLabelSize(0.);
   h_prefit_total->GetYaxis()->SetTitle("Events / bin");
   h_prefit_total->GetXaxis()->SetTitle(xaxisname);
-  //h_prefit_total->Draw("HIST E0"); // Skip drawing pre-fit for now
-  //h_prefit_catp2->Draw("HIST E0 sames");
-  //h_prefit_catp1->Draw("HIST E0 sames");
-  h_postfit_total->GetXaxis()->SetLabelSize(0.);
-  h_postfit_total->GetYaxis()->SetTitle("Events / bin");
-  h_postfit_total->GetXaxis()->SetTitle(xaxisname);
-  h_postfit_total->Draw("HIST E0");
+  h_prefit_total->Draw("HIST E0");
+  h_prefit_catp2->Draw("HIST E0 sames");
+  h_prefit_catp1->Draw("HIST E0 sames");
   h_postfit_catp2->Draw("HIST E0 sames");
   h_postfit_catp1->Draw("HIST E0 sames");
-  //h_postfit_total->Draw("HIST E0 sames");
+  h_postfit_total->Draw("HIST E0 sames");
   h_data->Draw("P sames");
   leg->Draw("sames");
   pt_cms->Draw("sames");
@@ -370,6 +365,62 @@ void getdiscval(float sigeff, TString algo, TString object, TString cut="(0==0)"
   int nbins = 4000;
   TString cut_final; int start = 1; int end = nbins+1; 
   TH1F *h_sig = new TH1F("h_sig_"+algo,"h_sig_"+algo,nbins,0.,1.);
+  if (algo=="sdtau32") { 
+    if (object=="T") { cut_final = "(xsecWeight*puWeight)*("+cut+" && ak8_1_pt>300. && ((ak8_1_dr_fj_top_wqmax<0.8) && (ak8_1_dr_fj_top_b<0.8)) && (ak8_1_mass>105 && ak8_1_mass<210.))"; }
+    t_sig->Project("h_sig_"+algo,"ak8_1_tau3/ak8_1_tau2",cut_final); 
+  }
+
+  if (algo=="sdtau32btag") { 
+    if (object=="T") { cut_final = "(xsecWeight*puWeight)*("+cut+" && ak8_1_pt>300. && ((ak8_1_dr_fj_top_wqmax<0.8) && (ak8_1_dr_fj_top_b<0.8)) && (ak8_1_mass>105 && ak8_1_mass<210.) && max(ak8_1_sj1_btagCSVV2,ak8_1_sj2_btagCSVV2)>0.5426 )"; }
+    t_sig->Project("h_sig_"+algo,"ak8_1_tau3/ak8_1_tau2",cut_final); 
+  }
+
+  if (algo=="sdtau21") { 
+    if (object=="W") { cut_final = "(xsecWeight*puWeight)*("+cut+" && ak8_1_pt>200. && (!((ak8_1_dr_fj_top_wqmax<0.8) && (ak8_1_dr_fj_top_b<0.8))) && ((ak8_1_dr_fj_top_wqmax<0.8) && (ak8_1_dr_fj_top_b>0.8)) && (ak8_1_mass>65 && ak8_1_mass<105.) )"; }
+    t_sig->Project("h_sig_"+algo,"ak8_1_tau2/ak8_1_tau1",cut_final); 
+  }
+
+  if (algo=="sdn2") { 
+    if (object=="W") { cut_final = "(xsecWeight*puWeight)*("+cut+" && ak8_1_pt>200. && (!((ak8_1_dr_fj_top_wqmax<0.8) && (ak8_1_dr_fj_top_b<0.8))) && ((ak8_1_dr_fj_top_wqmax<0.8) && (ak8_1_dr_fj_top_b>0.8)) && (ak8_1_mass>65 && ak8_1_mass<105.) )"; }
+    t_sig->Project("h_sig_"+algo,"ak8_1_n2b1",cut_final); 
+  }
+
+  if (algo=="sdn2ddt") { 
+    if (object=="W") { cut_final = "(xsecWeight*puWeight)*("+cut+" && ak8_1_pt>200. && (!((ak8_1_dr_fj_top_wqmax<0.8) && (ak8_1_dr_fj_top_b<0.8))) && ((ak8_1_dr_fj_top_wqmax<0.8) && (ak8_1_dr_fj_top_b>0.8)) && (ak8_1_mass>65 && ak8_1_mass<105.) )"; }
+    t_sig->Project("h_sig_"+algo,"ak8_1_n2b1ddt",cut_final); 
+  }
+
+  if (algo=="ecftoptag") {  // transformation: 0.5+0.5*ca15_ecfTopTagBDT
+    if (object=="T") { cut_final = "(xsecWeight*puWeight)*("+cut+" && ca15_1_pt>300. && ((ca15_1_dr_fj_top_wqmax<0.8) && (ca15_1_dr_fj_top_b<0.8)) && (ca15_1_mass>105 && ca15_1_mass<210.) && ca15_1_ecfTopTagBDT>-1. )"; }
+    t_sig->Project("h_sig_"+algo,"(0.5+0.5*ca15_1_ecfTopTagBDT)",cut_final); 
+  }
+
+  if (algo=="hotvr") {  
+    if (object=="T") { cut_final = "(xsecWeight*puWeight)*("+cut+" && hotvr_1_pt>300. && ((hotvr_1_dr_fj_top_wqmax<0.8) && (hotvr_1_dr_fj_top_b<0.8)) && (hotvr_1_mass>140 && hotvr_1_mass<220.) && hotvr_1_fpt<0.8 && hotvr_1_nsubjets>=3 && hotvr_1_mmin>=50. )"; }
+    t_sig->Project("h_sig_"+algo,"(1-hotvr_1_tau32)",cut_final); 
+  }
+
+  if (algo=="best") { 
+    if (object=="T") { cut_final = "(xsecWeight*puWeight)*("+cut+" && ak8_1_pt>300. && ((ak8_1_dr_fj_top_wqmax<0.8) && (ak8_1_dr_fj_top_b<0.8)))"; }
+    if (object=="W") { cut_final = "(xsecWeight*puWeight)*("+cut+" && ak8_1_pt>200. && (!((ak8_1_dr_fj_top_wqmax<0.8) && (ak8_1_dr_fj_top_b<0.8))) && ((ak8_1_dr_fj_top_wqmax<0.8) && (ak8_1_dr_fj_top_b>0.8)))"; }
+    t_sig->Project("h_sig_"+algo,"ak8_1_best_"+object+"vsQCD",cut_final); 
+  }
+
+  if (algo=="imagetop") { 
+    if (object=="T") { cut_final = "(xsecWeight*puWeight)*("+cut+" && ak8_1_pt>300. && ((ak8_1_dr_fj_top_wqmax<0.8) && (ak8_1_dr_fj_top_b<0.8)))"; }
+    t_sig->Project("h_sig_"+algo,"ak8_1_image_top",cut_final); 
+  }
+
+  if (algo=="imagetopmd") { 
+    if (object=="T") { cut_final = "(xsecWeight*puWeight)*("+cut+" && ak8_1_pt>300. && ((ak8_1_dr_fj_top_wqmax<0.8) && (ak8_1_dr_fj_top_b<0.8)))"; }
+    t_sig->Project("h_sig_"+algo,"ak8_1_image_top_md",cut_final); 
+  }
+
+  if (algo=="deepak8") { 
+    if (object=="T") { cut_final = "(xsecWeight*puWeight)*("+cut+" && ak8_1_pt>300. && ((ak8_1_dr_fj_top_wqmax<0.8) && (ak8_1_dr_fj_top_b<0.8)))"; }
+    if (object=="W") { cut_final = "(xsecWeight*puWeight)*("+cut+" && ak8_1_pt>200. && ((!((ak8_1_dr_fj_top_wqmax<0.8) && (ak8_1_dr_fj_top_b<0.8))) && ((ak8_1_dr_fj_top_wqmax<0.8) && (ak8_1_dr_fj_top_b>0.8))))"; }
+    t_sig->Project("h_sig_"+algo,"ak8_1_DeepAK8_"+object+"vsQCD",cut_final); 
+  }
 
   if (algo=="deepak8md") { 
     if (object=="T") { cut_final = "(xsecWeight*puWeight)*("+cut+" && ak8_1_pt>300. && ((ak8_1_dr_fj_top_wqmax<0.8) && (ak8_1_dr_fj_top_b<0.8)))"; }
