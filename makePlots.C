@@ -187,6 +187,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   tree->Draw(strCat+" >> h_sf_cat");
   tree->Draw(strCatLoErr+" >> h_sf_catLoErr");
   tree->Draw(strCatHiErr+" >> h_sf_catHiErr");
+  double SF, SFLoErr, SFHiErr; 
   SF    = h_sf_cat->GetMean();
   SFLoErr = h_sf_catLoErr->GetMean();
   SFHiErr = h_sf_catHiErr->GetMean();
