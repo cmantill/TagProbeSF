@@ -193,10 +193,10 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   h_prefit_total->GetXaxis()->SetLabelSize(0.);
   h_prefit_total->GetYaxis()->SetTitle("Events / bin");
   h_prefit_total->GetXaxis()->SetTitle(xaxisname);
-  h_prefit_total->Draw("HIST E0");
+  //h_prefit_total->Draw("HIST E0");
   //h_prefit_catp2->Draw("HIST E0 sames");
   //h_prefit_catp1->Draw("HIST E0 sames");
-  h_postfit_catp2->Draw("HIST E0 sames");
+  h_postfit_catp2->Draw("HIST E0");
   h_postfit_catp1->Draw("HIST E0 sames");
   h_postfit_total->Draw("HIST E0 sames");
   h_data->Draw("P sames");
@@ -204,7 +204,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pt_cms->Draw("sames");
   pt_preliminary->Draw("sames");
   pt_lumi.DrawLatexNDC(0.64,0.93,longstring);
-  pt_SF.DrawLatexNDC(0.3,0.49, out.str().c_str());
+  pt_SF.DrawLatexNDC(0.2,0.60, out.str().c_str());
   c->RedrawAxis();
   
   pRatio->cd();
