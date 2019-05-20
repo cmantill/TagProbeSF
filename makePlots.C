@@ -97,7 +97,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   TH1F *h_r_postfit = getDataMCratio(h_data,h_postfit_total); h_r_postfit->SetName("h_r_postfit_");
   h_r_postfit->SetMarkerColor(1); h_r_postfit->SetLineColor(1);
   
-  TLegend* leg = new TLegend(0.60,0.55,0.94,0.86);
+  TLegend* leg = new TLegend(0.70,0.55,1.04,0.86);
   leg->SetFillStyle(0);
   leg->SetFillColor(0);
   leg->SetLineWidth(0);
