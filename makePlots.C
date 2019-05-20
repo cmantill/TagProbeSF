@@ -200,7 +200,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pt_SF.SetTextSize(0.07);
   pt_SF.SetTextFont(42);
   std::ostringstream out;
-  out << fixed << setprecision(2) << "SF = " << SF << "+" << SFHiERR << " -" << SFLoErr;
+  out << fixed << setprecision(2) << "SF = " << SF << "+" << SFHiErr << " -" << SFLoErr;
   pt_SF.DrawLatexNDC(0.3,0.49, out.str());
 
 
