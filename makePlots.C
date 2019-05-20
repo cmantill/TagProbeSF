@@ -15,7 +15,7 @@ void rescaleXaxis(TGraphAsymmErrors *inputhisto, double xmin, double scale);
 TH1F *getDataMCratio(TGraphAsymmErrors *indata, TH1F *inMC);
 void setTDRStyle();
 void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString score, TString ptrange, TString category,
- 				float xmin, float xmax, int nbins,TString xaxisname, bool log);
+ float xmin, float xmax, int nbins,TString xaxisname, bool log);
 
 
 void makePlots(TString path2file, TString filename, TString score, TString ptrange, float xmin, float xmax, int nbins, TString xaxis) {
@@ -32,12 +32,12 @@ void makePlots(TString path2file, TString filename, TString score, TString ptran
   // make pre/post fit plots
   makeDataMCPlotsFromCombine(path2file,filename,score,ptrange,"pass",xmin,xmax,nbins,xaxis,false);
   makeDataMCPlotsFromCombine(path2file,filename,score,ptrange,"fail",xmin,xmax,nbins,xaxis,false);
-   
+
 }
 
 
 void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString score, TString ptrange, TString category,
- 				float xmin, float xmax, int nbins,TString xaxisname, bool log) {
+ float xmin, float xmax, int nbins,TString xaxisname, bool log) {
 
   setTDRStyle();
   gROOT->SetBatch(true);
@@ -155,7 +155,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pRatio->SetLeftMargin(0.17);
   pRatio->SetTopMargin(0.02);
   pRatio->SetBottomMargin(0.4);
-  pMain->Draw();
+  pMain->//();
   pRatio->Draw();
   
   pMain->cd();
@@ -167,8 +167,8 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   h_prefit_total->GetYaxis()->SetTitle("Events / bin");
   h_prefit_total->GetXaxis()->SetTitle(xaxisname);
   h_prefit_total->Draw("HIST E0");
-  h_prefit_catp2->Draw("HIST E0 sames");
-  h_prefit_catp1->Draw("HIST E0 sames");
+  //h_prefit_catp2->Draw("HIST E0 sames");
+  //h_prefit_catp1->Draw("HIST E0 sames");
   h_postfit_catp2->Draw("HIST E0 sames");
   h_postfit_catp1->Draw("HIST E0 sames");
   h_postfit_total->Draw("HIST E0 sames");
@@ -177,6 +177,29 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pt_cms->Draw("sames");
   pt_preliminary->Draw("sames");
   pt_lumi.DrawLatexNDC(0.64,0.93,longstring);
+
+  //Display SF 
+  TString strCat, strCatLoErr, strCatHiErr;   
+  strCat = "SF_catp2"; strCatLoErr = "SF_catp2LoErr"; strCatHiErr = "SF_catp2HiErr";
+  TH1F *h_sf_cat      = new TH1F("h_sf_cat"      , "h_sf_cat"      , 10000,0.,10.);
+  TH1F *h_sf_catLoErr = new TH1F("h_sf_catLoErr" , "h_sf_catLoErr" , 10000,0.,10.);
+  TH1F *h_sf_catHiErr = new TH1F("h_sf_catHiErr" , "h_sf_catHiErr" , 10000,0.,10.);
+  tree->Draw(strCat+" >> h_sf_cat");
+  tree->Draw(strCatLoErr+" >> h_sf_catLoErr");
+  tree->Draw(strCatHiErr+" >> h_sf_catHiErr");
+  SF    = h_sf_cat->GetMean();
+  SFLoErr = h_sf_catLoErr->GetMean();
+  SFHiErr = h_sf_catHiErr->GetMean();
+  h_sf_cat->Delete();
+  h_sf_catLoErr->Delete();
+  h_sf_catHiErr->Delete();
+
+  TLatex pt_SF;
+  pt_SF.SetTextSize(0.07);
+  pt_SF.SetTextFont(42);
+  pt_SF.DrawLatexNDC(0.3,0.49, "SF = " + str(round(SF,3)) + "#pm" + str(round(SFHiErr,3))+" "+str(round(SFLoErr,3)))
+
+
   c->RedrawAxis();
   
   pRatio->cd();
@@ -207,7 +230,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
 
 
 void getSFSummary(TString object, TString wp) {
-  
+
   setTDRStyle();
   gROOT->SetBatch(false);
   gStyle->SetOptStat(0);
@@ -249,7 +272,7 @@ void getSFSummary(TString object, TString wp) {
     ptrange.push_back("lowmed");
     ptrange.push_back("med");
   }
- 
+
 
   std::string names[100];
   TH1F *h_dummy; int nbins; int xmax;
@@ -258,7 +281,7 @@ void getSFSummary(TString object, TString wp) {
   h_dummy = new TH1F("h_dummy","h_dummy",nbins,0.,xmax);
   for (unsigned int i1=0; i1<h_dummy->GetNbinsX(); ++i1) { h_dummy->GetXaxis()->SetBinLabel(i1+1,names[i1].c_str()); }
 
-  std::vector<TGraphAsymmErrors*> gr_sf;
+    std::vector<TGraphAsymmErrors*> gr_sf;
   for (unsigned int ialgo=0; ialgo<algos.size(); ++ialgo) {
 
     double xval[20], xvalerr[20];
