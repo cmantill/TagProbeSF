@@ -9,6 +9,7 @@
 #include "TColor.h"
 #include "TVectorF.h"
 #include <cstdlib>
+#include <iomanip>
 
 TH1F *rescaleXaxis(TH1F *inputhisto, float xmin, float xmax);
 void rescaleXaxis(TGraphAsymmErrors *inputhisto, double xmin, double scale);
@@ -155,7 +156,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pRatio->SetLeftMargin(0.17);
   pRatio->SetTopMargin(0.02);
   pRatio->SetBottomMargin(0.4);
-  pMain->//();
+  pMain->Draw();
   pRatio->Draw();
   
   pMain->cd();
@@ -198,7 +199,9 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   TLatex pt_SF;
   pt_SF.SetTextSize(0.07);
   pt_SF.SetTextFont(42);
-  pt_SF.DrawLatexNDC(0.3,0.49, "SF = " + str(round(SF,3)) + "#pm" + str(round(SFHiErr,3))+" "+str(round(SFLoErr,3)))
+  std::ostringstream out;
+  out << fixed << setprecision(2) << "SF = " << SF << "+" << SFHiERR << " -" << SFLoErr;
+  pt_SF.DrawLatexNDC(0.3,0.49, out.str());
 
 
   c->RedrawAxis();
