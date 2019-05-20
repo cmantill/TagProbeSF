@@ -10,6 +10,8 @@
 #include "TVectorF.h"
 #include <cstdlib>
 #include <iomanip>
+#include <sstream>
+#include <string>
 
 TH1F *rescaleXaxis(TH1F *inputhisto, float xmin, float xmax);
 void rescaleXaxis(TGraphAsymmErrors *inputhisto, double xmin, double scale);
@@ -201,7 +203,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pt_SF.SetTextFont(42);
   std::ostringstream out;
   out << fixed << setprecision(2) << "SF = " << SF << "+" << SFHiErr << " -" << SFLoErr;
-  pt_SF.DrawLatexNDC(0.3,0.49, out);
+  pt_SF.DrawLatexNDC(0.3,0.49, out.str());
 
 
   c->RedrawAxis();
