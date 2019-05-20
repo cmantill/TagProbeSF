@@ -193,7 +193,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   h_prefit_total->GetXaxis()->SetLabelSize(0.);
   h_prefit_total->GetYaxis()->SetTitle("Events / bin");
   h_prefit_total->GetXaxis()->SetTitle(xaxisname);
-  //h_prefit_total->Draw("HIST E0");
+  h_prefit_total->Draw("HIST C");
   //h_prefit_catp2->Draw("HIST E0 sames");
   //h_prefit_catp1->Draw("HIST E0 sames");
   h_postfit_catp2->Draw("HIST E0 sames");
