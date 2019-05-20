@@ -162,24 +162,6 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pRatio->Draw();
   
   pMain->cd();
-  
-  float maxyld = h_postfit_total->GetMaximum(); 
-  if (h_prefit_total->GetMaximum()>h_postfit_total->GetMaximum()) { maxyld = h_prefit_total->GetMaximum(); }
-  if (log) { gPad->SetLogy(); h_prefit_total->GetYaxis()->SetRangeUser(0.1,10.*maxyld); } else { h_prefit_total->GetYaxis()->SetRangeUser(0.,1.8*maxyld); }
-  h_prefit_total->GetXaxis()->SetLabelSize(0.);
-  h_prefit_total->GetYaxis()->SetTitle("Events / bin");
-  h_prefit_total->GetXaxis()->SetTitle(xaxisname);
-  h_prefit_total->Draw("HIST E0");
-  //h_prefit_catp2->Draw("HIST E0 sames");
-  //h_prefit_catp1->Draw("HIST E0 sames");
-  h_postfit_catp2->Draw("HIST E0 sames");
-  h_postfit_catp1->Draw("HIST E0 sames");
-  h_postfit_total->Draw("HIST E0 sames");
-  h_data->Draw("P sames");
-  leg->Draw("sames");
-  pt_cms->Draw("sames");
-  pt_preliminary->Draw("sames");
-  pt_lumi.DrawLatexNDC(0.64,0.93,longstring);
 
   //Display SF 
   TString strCat, strCatLoErr, strCatHiErr;   
@@ -202,10 +184,27 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pt_SF.SetTextSize(0.07);
   pt_SF.SetTextFont(42);
   std::ostringstream out;
-  out << fixed << setprecision(2) << "SF = " << SF << "+" << SFHiErr << " -" << SFLoErr;
+  out << fixed << setprecision(3) << "SF = " << SF << "+" << SFHiErr << " -" << SFLoErr;
+
+  
+  float maxyld = h_postfit_total->GetMaximum(); 
+  if (h_prefit_total->GetMaximum()>h_postfit_total->GetMaximum()) { maxyld = h_prefit_total->GetMaximum(); }
+  if (log) { gPad->SetLogy(); h_prefit_total->GetYaxis()->SetRangeUser(0.1,10.*maxyld); } else { h_prefit_total->GetYaxis()->SetRangeUser(0.,1.8*maxyld); }
+  h_prefit_total->GetXaxis()->SetLabelSize(0.);
+  h_prefit_total->GetYaxis()->SetTitle("Events / bin");
+  h_prefit_total->GetXaxis()->SetTitle(xaxisname);
+  h_prefit_total->Draw("HIST E0");
+  //h_prefit_catp2->Draw("HIST E0 sames");
+  //h_prefit_catp1->Draw("HIST E0 sames");
+  h_postfit_catp2->Draw("HIST E0 sames");
+  h_postfit_catp1->Draw("HIST E0 sames");
+  h_postfit_total->Draw("HIST E0 sames");
+  h_data->Draw("P sames");
+  leg->Draw("sames");
+  pt_cms->Draw("sames");
+  pt_preliminary->Draw("sames");
+  pt_lumi.DrawLatexNDC(0.64,0.93,longstring);
   pt_SF.DrawLatexNDC(0.3,0.49, out.str().c_str());
-
-
   c->RedrawAxis();
   
   pRatio->cd();
