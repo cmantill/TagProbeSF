@@ -65,7 +65,7 @@ do
     mv sf.txt sf"_"datacard"_"${inputname}".txt"
     cd ../
     # for the bacon templates
-    cmdmake=$(echo 'makePlots.C("'${workdir}'","'${inputname}'","'${wp}'","'${ptrange}'",'50.','110.','20',"mass")') 
+    cmdmake=$(echo 'makePlots.C("'${workdir}'","'${inputname}'","'${wp}'","'${ptrange}'","'${whichbit}'",'50.','110.','20',"mass")') 
     # for the coffea templates
     #cmdmake=$(echo 'makePlots.C("'${workdir}'","'${inputname}'","'${wp}'","'${ptrange}'",'50.','110.','15',"mass")') 
     root -l -q ${cmdmake}

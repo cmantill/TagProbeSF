@@ -28,7 +28,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
  float xmin, float xmax, int nbins,TString xaxisname, bool log);
 void getSF(RooFitResult* r,  const char *strPar, double &par, double &parerr);
 
-void makePlots(TString path2file, TString filename, TString score, TString ptrange, float xmin, float xmax, int nbins, TString xaxis) {
+void makePlots(TString path2file, TString filename, TString score, TString ptrange,TString whichbit, float xmin, float xmax, int nbins, TString xaxis) {
   TH1::SetDefaultSumw2(kTRUE);
 
   setTDRStyle();
@@ -40,13 +40,13 @@ void makePlots(TString path2file, TString filename, TString score, TString ptran
   TH1::SetDefaultSumw2(kTRUE);
   
   // make pre/post fit plots
-  makeDataMCPlotsFromCombine(path2file,filename,score,ptrange,"pass",xmin,xmax,nbins,xaxis,false);
-  makeDataMCPlotsFromCombine(path2file,filename,score,ptrange,"fail",xmin,xmax,nbins,xaxis,false);
+  makeDataMCPlotsFromCombine(path2file,filename,score,ptrange,whichbit,"pass",xmin,xmax,nbins,xaxis,false);
+  makeDataMCPlotsFromCombine(path2file,filename,score,ptrange,whichbit,"fail",xmin,xmax,nbins,xaxis,false);
 
 }
 
 
-void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString score, TString ptrange, TString category,
+void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString score, TString ptrange, TString whichbit, TString category,
  float xmin, float xmax, int nbins,TString xaxisname, bool log) {
 
   setTDRStyle();
@@ -241,12 +241,12 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   c->RedrawAxis();
   
   if (log) {
-    c->Print(path2file+"/plots_datamc/"+category+"_"+score+"_"+ptrange+"_log.pdf");
-    c->Print(path2file+"/plots_datamc/"+category+"_"+score+"_"+ptrange+"_log.png");
+    c->Print(path2file+"/plots_datamc/"+category+"_"+score+"_"+whichbit+"_"+ptrange+"_log.pdf");
+    c->Print(path2file+"/plots_datamc/"+category+"_"+score+"_"+whichbit+"_"+ptrange+"_log.png");
   } 
   else {
-    c->Print(path2file+"/plots_datamc/"+category+"_"+score+"_"+ptrange+"_lin.pdf");
-    c->Print(path2file+"/plots_datamc/"+category+"_"+score+"_"+ptrange+"_lin.png");
+    c->Print(path2file+"/plots_datamc/"+category+"_"+score+"_"+whichbit+"_"+ptrange+"_lin.pdf");
+    c->Print(path2file+"/plots_datamc/"+category+"_"+score+"_"+whichbit+"_"+ptrange+"_lin.png");
   }
   //c->Delete();
 
