@@ -147,7 +147,11 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
 
   TLatex pt_lumi;
   //const char *longstring = "41.1 fb^{-1} (13 TeV)";
-  const char *longstring = "59.0 fb^{-1} (13 TeV)";
+  char *longstring;
+  if(whichbit == "05"){longstring = "59.0 fb^{-1} (13 TeV)";}
+  else if(whichbit == "04"){longstring = "41.1 fb^{-1} (13 TeV)";}
+
+
   pt_lumi.SetTextSize(0.07);
   pt_lumi.SetTextFont(42);
   
