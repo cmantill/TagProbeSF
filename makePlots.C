@@ -24,7 +24,7 @@ TH1F *rescaleXaxis(TH1F *inputhisto, float xmin, float xmax);
 void rescaleXaxis(TGraphAsymmErrors *inputhisto, double xmin, double scale);
 TH1F *getDataMCratio(TGraphAsymmErrors *indata, TH1F *inMC);
 void setTDRStyle();
-void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString score, TString ptrange, TString category,
+void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString score, TString ptrange,TString whichbit, TString category,
  float xmin, float xmax, int nbins,TString xaxisname, bool log);
 void getSF(RooFitResult* r,  const char *strPar, double &par, double &parerr);
 
