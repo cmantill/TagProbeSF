@@ -29,8 +29,10 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
 
   //TFile *f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/sklimWtagAK8v12017WP026/PseudoData_AK8v12017WP026.root" , "READONLY" );
   //TFile *f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/sklimWtagAK8v12017WP026/Data_AK8v12017WP026.root" , "READONLY" );
-  TFile *f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits04-vbf/PseudoData.root" , "READONLY" );
-  TFile *f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits04-vbf/Data.root" , "READONLY" );
+  //TFile *f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits04-vbf/PseudoData.root" , "READONLY" );
+  //TFile *f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits04-vbf/Data.root" , "READONLY" );
+  TFile *f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits05-vbf/PseudoData.root" , "READONLY" );
+  TFile *f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits05-vbf/Data.root" , "READONLY" );
 
   TTree *t_mc   = (TTree*)f_mc->Get("otree2");
   TTree *t_data = (TTree*)f_data->Get("otree2");
@@ -39,7 +41,8 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
   samples.push_back(t_mc);
   samples.push_back(t_data);
 
-  float intLumi     = 41.1;
+  //float intLumi     = 41.1;
+  float intLumi     = 59.0;
   ostringstream tmpLumi;
   tmpLumi << intLumi;
   TString lumi = tmpLumi.str();
@@ -62,7 +65,7 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
   //if ( ((TString)object=="T") && (ptrange == "incl") )   { c_ptrange = "(AK8Puppijet0_pt>300.)"; }
   //if ( ((TString)object=="T") && (ptrange == "low") )    { c_ptrange = "(AK8Puppijet0_pt>300. && AK8Puppijet0_pt<=400.)";  }
   //if ( ((TString)object=="T") && (ptrange == "med") )    { c_ptrange = "(AK8Puppijet0_pt>400. && AK8Puppijet0_pt<=600.)";  }
-  c_ptrange = "(Puppijet0_pt>300.)";
+  c_ptrange = "(Puppijet0_pt>200.)";
 
 
 
