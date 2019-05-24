@@ -20,12 +20,14 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange,T
   TString passstr = "pass"; if (pass) { passstr = "pass"; } else { passstr = "fail"; }
   TString name = object+"_"+algo+"_"+wp+"_"+whichbit+"_"+ptrange+"_"+passstr;
 
+
   setTDRStyle();
   gROOT->SetBatch(true);
   gStyle->SetOptStat(0);
   gStyle->SetOptFit(1);
   gStyle->SetPalette(1);
   TH1::SetDefaultSumw2(kTRUE);
+
 
   //TFile *f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/sklimWtagAK8v12017WP026/PseudoData_AK8v12017WP026.root" , "READONLY" );
   //TFile *f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/sklimWtagAK8v12017WP026/Data_AK8v12017WP026.root" , "READONLY" );
