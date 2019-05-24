@@ -147,9 +147,9 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
 
   TLatex pt_lumi;
   //const char *longstring = "41.1 fb^{-1} (13 TeV)";
-  char *longstring;
-  if(whichbit == "05"){longstring = "59.0 fb^{-1} (13 TeV)";}
-  else if(whichbit == "04"){longstring = "41.1 fb^{-1} (13 TeV)";}
+  std::ostringstream lumistring;
+  if(whichbit == "05"){lumistring << "59.0 fb^{-1} (13 TeV)";}
+  else if(whichbit == "04"){lumistring << "41.1 fb^{-1} (13 TeV)";}
 
 
   pt_lumi.SetTextSize(0.07);
@@ -222,7 +222,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   leg->Draw("sames");
   pt_cms->Draw("sames");
   pt_preliminary->Draw("sames");
-  pt_lumi.DrawLatexNDC(0.64,0.93,longstring);
+  pt_lumi.DrawLatexNDC(0.64,0.93,lumistring.str().c_str());
   if(category=="pass"){
     pt_SF.DrawLatexNDC(0.2,0.65, out.str().c_str());
     pt_Shift.DrawLatexNDC(0.2,0.55, out_shift.str().c_str());
