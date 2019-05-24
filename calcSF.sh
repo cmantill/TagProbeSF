@@ -18,7 +18,7 @@ for ptrange in "${ptranges[@]}";
 do
     ##make templates
     echo "make templates"
-    echo "${whichbit}"
+    echo "using bit version ${whichbit}"
     
     # for bacon skim -> comment this if the templates are already done in coffea
     cmdpass=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'","'${whichbit}'",true)')

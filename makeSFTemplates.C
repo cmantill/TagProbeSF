@@ -15,7 +15,7 @@ TH1D *create1Dhisto(TString sample, TTree *tree,TString intLumi,TString cuts,TSt
 		    bool useLog,int color, int style,TString name,bool norm,bool data);
 void setTDRStyle();
 
-void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange,TString whichbit, bool pass) {
+void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, TString whichbit, bool pass) {
 
   TString passstr = "pass"; if (pass) { passstr = "pass"; } else { passstr = "fail"; }
   TString name = object+"_"+algo+"_"+wp+"_"+whichbit+"_"+ptrange+"_"+passstr;
@@ -27,6 +27,7 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange,T
   gStyle->SetOptFit(1);
   gStyle->SetPalette(1);
   TH1::SetDefaultSumw2(kTRUE);
+  std::cout << whichbit << std::endl;
 
 
   //TFile *f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/sklimWtagAK8v12017WP026/PseudoData_AK8v12017WP026.root" , "READONLY" );
