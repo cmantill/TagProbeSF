@@ -15,10 +15,10 @@ TH1D *create1Dhisto(TString sample, TTree *tree,TString intLumi,TString cuts,TSt
 		    bool useLog,int color, int style,TString name,bool norm,bool data);
 void setTDRStyle();
 
-void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, bool pass) {
+void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange,TString whichbit, bool pass) {
 
   TString passstr = "pass"; if (pass) { passstr = "pass"; } else { passstr = "fail"; }
-  TString name = object+"_"+algo+"_"+wp+"_"+ptrange+"_"+passstr;
+  TString name = object+"_"+algo+"_"+wp+"_"+whichbit+"_"+ptrange+"_"+passstr;
 
   setTDRStyle();
   gROOT->SetBatch(true);
@@ -29,10 +29,17 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
 
   //TFile *f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/sklimWtagAK8v12017WP026/PseudoData_AK8v12017WP026.root" , "READONLY" );
   //TFile *f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/sklimWtagAK8v12017WP026/Data_AK8v12017WP026.root" , "READONLY" );
-  //TFile *f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits04-vbf/PseudoData.root" , "READONLY" );
-  //TFile *f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits04-vbf/Data.root" , "READONLY" );
-  TFile *f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits05-vbf/PseudoData.root" , "READONLY" );
-  TFile *f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits05-vbf/Data.root" , "READONLY" );
+  if (whichbit == "04"){
+    TFile *f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits04-vbf/PseudoData.root" , "READONLY" );
+    TFile *f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits04-vbf/Data.root" , "READONLY" );
+  }
+  else if (whichbit == "05"){
+    TFile *f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits05-vbf/PseudoData.root" , "READONLY" );
+    TFile *f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits05-vbf/Data.root" , "READONLY" );
+  }
+  else{
+    perror("enter either 04 or 05 for bit version");
+  }
 
   TTree *t_mc   = (TTree*)f_mc->Get("otree2");
   TTree *t_data = (TTree*)f_data->Get("otree2");

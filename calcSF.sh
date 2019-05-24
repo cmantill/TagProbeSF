@@ -2,6 +2,8 @@
 object=$1
 algo=$2
 wp=$3
+whichbit=$4
+#For bit version, enter either 04 or 05
 
 declare -a ptranges
 #ptranges=("low" "lowmed" "med")
@@ -18,15 +20,15 @@ do
     echo "make templates"
     
     # for bacon skim -> comment this if the templates are already done in coffea
-    cmdpass=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'",true)')
-    cmdfail=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'",false)')
+    cmdpass=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'","'${whichbit}'",true)')
+    cmdfail=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'","'${whichbit}'",false)')
     root -l -q ${cmdpass}
     root -l -q ${cmdfail}
 
     # pre-templates done
 
     ## add scale and smear
-    inputname=${object}"_"${algo}"_"${wp}"_"${ptrange}
+    inputname=${object}"_"${algo}"_"${wp}"_"${whichbit}"_"${ptrange}
     python makeSmearShift.py --ifile ${workdir}/${inputname}_pass_pre.root
     python makeSmearShift.py --ifile ${workdir}/${inputname}_fail_pre.root
 
@@ -37,7 +39,7 @@ do
     echo "make datacard"
     echo " "
     cd ${workdir}
-    inputname=${object}"_"${algo}"_"${wp}"_"${ptrange}
+    inputname=${object}"_"${algo}"_"${wp}"_"${whichbit}"_"${ptrange}
     cp ../makeSFDatacard.C .
     cmdmakedatacard=$(echo 'makeSFDatacard.C("'${inputname}'")')
     root -l -q ${cmdmakedatacard} > sf.txt
