@@ -33,13 +33,16 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
 
   //TFile *f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/sklimWtagAK8v12017WP026/PseudoData_AK8v12017WP026.root" , "READONLY" );
   //TFile *f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/sklimWtagAK8v12017WP026/Data_AK8v12017WP026.root" , "READONLY" );
+  float intLumi = 1;
   if (whichbit == "04"){
     f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits04-vbf/PseudoData.root" , "READONLY" );
     f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits04-vbf/Data.root" , "READONLY" );
+    intLumi     = 41.1;
   }
   else if (whichbit == "05"){
     f_mc   = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits05-vbf/PseudoData.root" , "READONLY" );
     f_data = TFile::Open("/afs/cern.ch/user/c/cmantill/public/forSangEon/bits05-vbf/Data.root" , "READONLY" );
+    intLumi     = 59.0;
   }
   else{
     perror("enter either 04 or 05 for bit version");
@@ -52,8 +55,6 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
   samples.push_back(t_mc);
   samples.push_back(t_data);
 
-  //float intLumi     = 41.1;
-  float intLumi     = 59.0;
   ostringstream tmpLumi;
   tmpLumi << intLumi;
   TString lumi = tmpLumi.str();
