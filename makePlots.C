@@ -146,7 +146,6 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pt_preliminary->SetTextSize(0.06);
 
   TLatex pt_lumi;
-  //const char *longstring = "41.1 fb^{-1} (13 TeV)";
   std::ostringstream lumistring;
   if(whichbit == "05"){lumistring << "59.0 fb^{-1} (13 TeV)";}
   else if(whichbit == "04"){lumistring << "41.1 fb^{-1} (13 TeV)";}
