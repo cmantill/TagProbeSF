@@ -194,7 +194,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pt_Shift.SetTextSize(0.07);
   pt_Shift.SetTextFont(42);
   std::ostringstream out_shift;
-  out_shift << fixed << setprecision(3) << "Shift = " << Shift*10 << "  +" << ShiftErr*10 << " -" << ShiftErr*10;
+  out_shift << fixed << setprecision(3) << "Shift = " << (80.379+Shift*10)/80.379 << "  +" << ShiftErr*10/80.379 << " -" << ShiftErr*10/80.379;
 
   // Display Smear
   const char *strSmear = "smear";
