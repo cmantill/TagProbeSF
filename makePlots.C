@@ -226,7 +226,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   if(category=="pass"){
     pt_SF.DrawLatexNDC(0.2,0.65, out.str().c_str());
     pt_Shift.DrawLatexNDC(0.2,0.55, out_shift.str().c_str());
-    //pt_Smear.DrawLatexNDC(0.2,0.45, out_smear.str().c_str());
+    pt_Smear.DrawLatexNDC(0.2,0.45, out_smear.str().c_str());
   }
   c->RedrawAxis();
   
