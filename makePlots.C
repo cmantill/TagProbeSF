@@ -204,7 +204,16 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pt_Smear.SetTextSize(0.07);
   pt_Smear.SetTextFont(42);
   std::ostringstream out_smear;
-  out_smear << fixed << setprecision(5) << "Smear(0.5) = " << Smear << "  +" << SmearErr << " -" << SmearErr;
+  out_smear << fixed << setprecision(5) << "Smear(1) = " << Smear << "  +" << SmearErr << " -" << SmearErr;
+
+  Display Standard deviation
+  TLatex pt_Stddev;
+  pt_Stddev.SetTextSize(0.07);
+  pt_Stddev.SetTextFont(42);
+  std::ostringstream out_stddev;
+  out_stddev << fixed << setprecision(5) << "Stdev pre " << h_prefit_catp2.GetStdDev() << " post" << h_postfit_catp2.GetStdDev();
+
+
 
   float maxyld = h_postfit_total->GetMaximum(); 
   if (h_prefit_total->GetMaximum()>h_postfit_total->GetMaximum()) { maxyld = h_prefit_total->GetMaximum(); }
