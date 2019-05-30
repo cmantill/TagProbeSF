@@ -87,7 +87,7 @@ def create(options):
     # get res up/down
     #res_sigma = 10 # 1/res_sigma goes in the datacard
     #res_shift_unc = 0.05 * res_sigma; 
-    hmatchedsys_smear = hist_container.smear(hmatched_new_central, 1)
+    hmatchedsys_smear = hist_container.smear(hmatched_new_central, 0.75)
     hmatchedsys_smear[0].SetName("catp2_smearUp"); hmatchedsys_smear[0].SetTitle("catp2_smearUp");
     hmatchedsys_smear[1].SetName("catp2_smearDown"); hmatchedsys_smear[1].SetTitle("catp2_smearDown");
 
