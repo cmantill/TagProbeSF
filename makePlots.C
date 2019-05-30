@@ -211,7 +211,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pt_Stddev.SetTextSize(0.07);
   pt_Stddev.SetTextFont(42);
   std::ostringstream out_stddev;
-  out_stddev << fixed << setprecision(5) << "Stdev pre " << h_prefit_catp2.GetStdDev() << " post" << h_postfit_catp2.GetStdDev();
+  out_stddev << fixed << setprecision(5) << "Stdev pre " << h_prefit_catp2->GetStdDev() << " post" << h_postfit_catp2->GetStdDev();
 
 
 
