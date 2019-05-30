@@ -206,7 +206,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   std::ostringstream out_smear;
   out_smear << fixed << setprecision(5) << "Smear(1) = " << Smear << "  +" << SmearErr << " -" << SmearErr;
 
-  Display Standard deviation
+  //Display Standard deviation
   TLatex pt_Stddev;
   pt_Stddev.SetTextSize(0.07);
   pt_Stddev.SetTextFont(42);
@@ -236,6 +236,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
     pt_SF.DrawLatexNDC(0.2,0.65, out.str().c_str());
     pt_Shift.DrawLatexNDC(0.2,0.55, out_shift.str().c_str());
     pt_Smear.DrawLatexNDC(0.2,0.45, out_smear.str().c_str());
+    pt_Stddev.DrawLatexNDC(0.2,0.35, out_stddev.str().c_str());
   }
   c->RedrawAxis();
   
