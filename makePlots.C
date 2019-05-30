@@ -204,7 +204,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pt_Smear.SetTextSize(0.07);
   pt_Smear.SetTextFont(42);
   std::ostringstream out_smear;
-  out_smear << fixed << setprecision(5) << "Smear(10) = " << Smear << "  +" << SmearErr << " -" << SmearErr;
+  out_smear << fixed << setprecision(5) << "Smear(5) = " << Smear << "  +" << SmearErr << " -" << SmearErr;
 
   float maxyld = h_postfit_total->GetMaximum(); 
   if (h_prefit_total->GetMaximum()>h_postfit_total->GetMaximum()) { maxyld = h_prefit_total->GetMaximum(); }

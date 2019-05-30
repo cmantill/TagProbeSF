@@ -35,7 +35,7 @@ void makeSFDatacard(std::string inputname) {
   std::cout << "jecs    lnN    1.02   1.02   1.02   1.02 \n";
   std::cout << "pu      lnN    1.05   1.05   1.05   1.05 \n";
   std::cout << "scale  shapeU   1      -     1      -  \n";
-  std::cout << "smear  shapeU   10      -     10      -  \n";
+  std::cout << "smear  shapeU   5      -     5      -  \n";
   std::cout << "*  autoMCStats  0\n";
   
 }
