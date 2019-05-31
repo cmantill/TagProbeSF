@@ -204,7 +204,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pt_Smear.SetTextSize(0.07);
   pt_Smear.SetTextFont(42);
   std::ostringstream out_smear;
-  out_smear << fixed << setprecision(4) << "Smear = " << 1/(1+*0.1*0.5*Smear) << "  +" << 0.1*0.5/((1+SmearErr*0.1*0.5)*(1+SmearErr*0.1*0.5)) << " -" << 0.1*0.5/((1+SmearErr*0.1*0.5)*(1+SmearErr*0.1*0.5));
+  out_smear << fixed << setprecision(4) << "Smear = " << 1/(1+0.1*0.5*Smear) << "  +" << 0.1*0.5/((1+SmearErr*0.1*0.5)*(1+SmearErr*0.1*0.5)) << " -" << 0.1*0.5/((1+SmearErr*0.1*0.5)*(1+SmearErr*0.1*0.5));
 
   //Display Standard deviation
   TLatex pt_Stddev;
