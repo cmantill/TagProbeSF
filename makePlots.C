@@ -193,7 +193,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pt_Shift.SetTextSize(0.07);
   pt_Shift.SetTextFont(42);
   std::ostringstream out_shift;
-  out_shift << fixed << setprecision(3) << "Shift = " << Shift << "  +" << ShiftErr << " -" << ShiftErr;
+  out_shift << fixed << setprecision(3) << "Shift = " << (80.379+Shift*10)/80.379 << "  +" << ShiftErr*10/80.379 << " -" << ShiftErr*10/80.379;
 
   // Display Smear
   const char *strSmear = "smear";
@@ -203,7 +203,16 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pt_Smear.SetTextSize(0.07);
   pt_Smear.SetTextFont(42);
   std::ostringstream out_smear;
-  out_smear << fixed << setprecision(3) << "Smear = " << Smear << "  +" << SmearErr << " -" << SmearErr;
+  out_smear << fixed << setprecision(4) << "Smear = " << 1/(1+0.1*0.5*Smear) << "  +" << 0.1*0.5/((1+SmearErr*0.1*0.5)*(1+SmearErr*0.1*0.5)) << " -" << 0.1*0.5/((1+SmearErr*0.1*0.5)*(1+SmearErr*0.1*0.5));
+
+  //Display Standard deviation
+  TLatex pt_Stddev;
+  pt_Stddev.SetTextSize(0.07);
+  pt_Stddev.SetTextFont(42);
+  std::ostringstream out_stddev;
+  out_stddev << fixed << setprecision(5) << "Stdev pre: " << h_prefit_catp2->GetStdDev() << " post : " << h_postfit_catp2->GetStdDev();
+
+
 
   float maxyld = h_postfit_total->GetMaximum(); 
   if (h_prefit_total->GetMaximum()>h_postfit_total->GetMaximum()) { maxyld = h_prefit_total->GetMaximum(); }
@@ -226,6 +235,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
     pt_SF.DrawLatexNDC(0.2,0.65, out.str().c_str());
     pt_Shift.DrawLatexNDC(0.2,0.55, out_shift.str().c_str());
     pt_Smear.DrawLatexNDC(0.2,0.45, out_smear.str().c_str());
+    //pt_Stddev.DrawLatexNDC(0.2,0.35, out_stddev.str().c_str());
   }
   c->RedrawAxis();
   
