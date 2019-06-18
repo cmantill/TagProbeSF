@@ -49,8 +49,8 @@ def create(options):
     lHOthers = []
     for key in lFile.GetListOfKeys():
         lh = key.ReadObj();
-        if lh.GetName() == signal:
-            print lh.GetName()
+        if lh.GetName() == signal or lh.GetName() == "catp2_scaleUp" or lh.GetName() == "catp2_scaleDown":
+            print "skipping ",lh.GetName()
             continue
         lh.SetDirectory(0)
         lHOthers.append(lh)
@@ -80,14 +80,16 @@ def create(options):
     # get shift up and down variations
     #mass_sigma = 1000 # 1/mass_sigma goes in the datacard
     #mass_shift_unc = 0.01 * mass_sigma;
-    hmatchedsys_shift = hist_container.shift(hmatched_new_central, 10)
+    scale_opt = options.scale
+    hmatchedsys_shift = hist_container.shift(hmatched_new_central, scale_opt)
     hmatchedsys_shift[0].SetName("catp2_scaleUp"); hmatchedsys_shift[0].SetTitle("catp2_scaleUp")
     hmatchedsys_shift[1].SetName("catp2_scaleDown");  hmatchedsys_shift[1].SetTitle("catp2_scaleDown");
 
     # get res up/down
     #res_sigma = 10 # 1/res_sigma goes in the datacard
     #res_shift_unc = 0.05 * res_sigma; 
-    hmatchedsys_smear = hist_container.smear(hmatched_new_central, 0.5)
+    smear_opt = options.smear
+    hmatchedsys_smear = hist_container.smear(hmatched_new_central, smear_opt)
     hmatchedsys_smear[0].SetName("catp2_smearUp"); hmatchedsys_smear[0].SetTitle("catp2_smearUp");
     hmatchedsys_smear[1].SetName("catp2_smearDown"); hmatchedsys_smear[1].SetTitle("catp2_smearDown");
 
@@ -107,6 +109,8 @@ def create(options):
 def parser():
     parser = OptionParser()
     parser.add_option('--ifile',action='store',dest='ifile',help='input file')
+    parser.add_option('--smear',dest='smear',default=0.5,type=float,help='smear value')
+    parser.add_option('--scale',dest='scale',default=10,type=float,help='scale value')
     (options,args) = parser.parse_args()
     return options
 
