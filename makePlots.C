@@ -25,10 +25,15 @@ void rescaleXaxis(TGraphAsymmErrors *inputhisto, double xmin, double scale);
 TH1F *getDataMCratio(TGraphAsymmErrors *indata, TH1F *inMC);
 void setTDRStyle();
 void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString score, TString ptrange,TString whichbit, TString category,
- float xmin, float xmax, int nbins,TString xaxisname, bool log);
+                                float scaleval, float scaledat,
+				float smearval, float smeardat,
+				float xmin, float xmax, int nbins,TString xaxisname, bool log);
 void getSF(RooFitResult* r,  const char *strPar, double &par, double &parerr);
 
-void makePlots(TString path2file, TString filename, TString score, TString ptrange,TString whichbit, float xmin, float xmax, int nbins, TString xaxis) {
+void makePlots(TString path2file, TString filename, TString score, TString ptrange,TString whichbit, 
+	       float scaleval, float scaledat,
+	       float smearval, float smeardat, 
+	       float xmin, float xmax, int nbins, TString xaxis) {
   TH1::SetDefaultSumw2(kTRUE);
 
   setTDRStyle();
@@ -40,14 +45,20 @@ void makePlots(TString path2file, TString filename, TString score, TString ptran
   TH1::SetDefaultSumw2(kTRUE);
   
   // make pre/post fit plots
-  makeDataMCPlotsFromCombine(path2file,filename,score,ptrange,whichbit,"pass",xmin,xmax,nbins,xaxis,false);
-  makeDataMCPlotsFromCombine(path2file,filename,score,ptrange,whichbit,"fail",xmin,xmax,nbins,xaxis,false);
+  makeDataMCPlotsFromCombine(path2file,filename,score,ptrange,whichbit,"pass",
+			     scaleval,scaledat,smearval,smeardat,
+			     xmin,xmax,nbins,xaxis,false);
+  makeDataMCPlotsFromCombine(path2file,filename,score,ptrange,whichbit,"fail",
+			     scaleval,scaledat,smearval,smeardat,
+			     xmin,xmax,nbins,xaxis,false);
 
 }
 
 
 void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString score, TString ptrange, TString whichbit, TString category,
- float xmin, float xmax, int nbins,TString xaxisname, bool log) {
+				float scaleval, float scaledat,
+				float smearval, float smeardat,
+				float xmin, float xmax, int nbins,TString xaxisname, bool log) {
 
   setTDRStyle();
   gROOT->SetBatch(true);
@@ -60,6 +71,40 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
 
   const int dir_err = system("mkdir -p ./"+(TString)path2file+"/plots_datamc");
   if (-1 == dir_err) { printf("Error creating directory!n"); exit(1); }
+
+  TFile *fshapes = TFile::Open("./"+path2file+"/"+filename+"_"+category+".root", "READONLY" );
+  TH1F *h_central = (TH1F*)fshapes->Get("catp2"); h_central->SetName("central"); h_central->SetDirectory(0);
+  float maxy;
+  if(smeardat >0){
+    TH1F *h_smearUp = (TH1F*)fshapes->Get("catp2_smearUp"); h_smearUp->SetName("smearUp"); h_smearUp->SetDirectory(0);
+    TH1F *h_smearDown = (TH1F*)fshapes->Get("catp2_smearDown"); h_smearDown->SetName("smearDown"); h_smearDown->SetDirectory(0);
+    TCanvas *c1 = new TCanvas("c","c",600,600);
+    maxy = h_central->GetMaximum();
+    if ( h_smearUp->GetMaximum()>h_central->GetMaximum()) { maxy = h_smearUp->GetMaximum(); }
+    h_central->GetYaxis()->SetRangeUser(0.,1.8*maxy);
+    h_central->SetLineWidth(3); h_central->SetLineColor(1);  h_central->Draw("HIST");
+    h_smearUp->SetLineWidth(3); h_smearUp->SetLineColor(2);  h_smearUp->Draw("HIST sames");
+    h_smearDown->SetLineWidth(3); h_smearDown->SetLineColor(3);  h_smearDown->Draw("HIST sames");
+    c1->SaveAs(path2file+"/plots_datamc/smear_"+category+".pdf");
+    c1->Print(path2file+"/plots_datamc/smear_"+category+".pdf");
+    c1->RedrawAxis();
+  }
+  if(scaledat >0){
+    TH1F *h_scaleUp = (TH1F*)fshapes->Get("catp2_scaleUp"); h_scaleUp->SetName("scaleUp"); h_scaleUp->SetDirectory(0);
+    TH1F *h_scaleDown = (TH1F*)fshapes->Get("catp2_scaleDown"); h_scaleDown->SetName("scaleDown"); h_scaleDown->SetDirectory(0);
+    TCanvas *c2 = new TCanvas("c2","c2",600,600);
+    maxy = h_central->GetMaximum();
+    if ( h_scaleUp->GetMaximum()>h_central->GetMaximum()) { maxy = h_scaleUp->GetMaximum(); }
+    h_central->GetYaxis()->SetRangeUser(0.,1.8*maxy);
+    h_central->SetLineWidth(3); h_central->SetLineColor(1);  h_central->Draw("HIST");
+    h_scaleUp->SetLineWidth(3); h_scaleUp->SetLineColor(2);  h_scaleUp->Draw("HIST sames");
+    h_scaleDown->SetLineWidth(3); h_scaleDown->SetLineColor(3);  h_scaleDown->Draw("HIST sames");
+    c2->SaveAs(path2file+"/plots_datamc/scale_"+category+".pdf");
+    c2->Print(path2file+"/plots_datamc/scale_"+category+".pdf");
+    c2->RedrawAxis();
+  }
+  fshapes->Close();
+
   TFile *fdiag = TFile::Open("./"+path2file+"/sf_fitDiagnostics_"+filename+".root", "READONLY" );
 
   // get prefit histograms
@@ -187,23 +232,36 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
 
   // Display Scale
   const char *strShift = "scale";
-  double Shift, ShiftErr; getSF(r, strShift, Shift, ShiftErr);
-
   TLatex pt_Shift;
   pt_Shift.SetTextSize(0.07);
   pt_Shift.SetTextFont(42);
   std::ostringstream out_shift;
-  out_shift << fixed << setprecision(3) << "Shift = " << (80.379+Shift*10)/80.379 << "  +" << ShiftErr*10/80.379 << " -" << ShiftErr*10/80.379;
+  if(scaledat>0){
+    double Shift, ShiftErr; getSF(r, strShift, Shift, ShiftErr);
+    //out_shift << fixed << setprecision(3) << "Shift = " << (80.379+scaleval*scaledat*Shift)/80.379 << "  +" << scaleval*scaledat*ShiftErr/80.379 << " -" << ShiftErr*scaleval*scaledat/80.379;
+    out_shift << fixed << setprecision(3) << "Shift = " << Shift << "  +" << ShiftErr << " -" << ShiftErr;
+    std::cout << "scale " << out_shift.str() << std::endl;
+    std::cout << "shift " << Shift*scaleval*scaledat << " and from combine " << Shift <<std::endl;
+  }
+  else{
+    std::cout << " NO SCALE IN DATACARD " << std::endl;
+  }
 
   // Display Smear
   const char *strSmear = "smear";
-  double Smear, SmearErr; getSF(r, strSmear, Smear, SmearErr);
-
   TLatex pt_Smear;
   pt_Smear.SetTextSize(0.07);
   pt_Smear.SetTextFont(42);
   std::ostringstream out_smear;
-  out_smear << fixed << setprecision(4) << "Smear = " << 1/(1+0.1*0.5*Smear) << "  +" << 0.1*0.5/((1+SmearErr*0.1*0.5)*(1+SmearErr*0.1*0.5)) << " -" << 0.1*0.5/((1+SmearErr*0.1*0.5)*(1+SmearErr*0.1*0.5));
+  if(smeardat>0){
+    double Smear, SmearErr; getSF(r, strSmear, Smear, SmearErr);
+    out_smear << fixed << setprecision(4) << "Smear = " << 1/(1+smeardat*smearval*Smear) << "  +" << smeardat*smearval/((1+SmearErr*smeardat*smearval)*(1+SmearErr*smeardat*smearval)) << " -" << smeardat*smearval/((1+SmearErr*smeardat*smearval)*(1+SmearErr*smeardat*smearval));
+    std::cout << "res " << out_smear.str() << std::endl;
+    std::cout << "smear "<< smeardat*smearval*Smear << " and from combine: "<< Smear <<std::endl;
+  }
+  else{
+    std::cout << " NO SMEAR IN DATACARD " << std::endl;
+  }
 
   //Display Standard deviation
   TLatex pt_Stddev;
@@ -211,8 +269,6 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   pt_Stddev.SetTextFont(42);
   std::ostringstream out_stddev;
   out_stddev << fixed << setprecision(5) << "Stdev pre: " << h_prefit_catp2->GetStdDev() << " post : " << h_postfit_catp2->GetStdDev();
-
-
 
   float maxyld = h_postfit_total->GetMaximum(); 
   if (h_prefit_total->GetMaximum()>h_postfit_total->GetMaximum()) { maxyld = h_prefit_total->GetMaximum(); }
@@ -234,7 +290,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   if(category=="pass"){
     pt_SF.DrawLatexNDC(0.2,0.65, out.str().c_str());
     pt_Shift.DrawLatexNDC(0.2,0.55, out_shift.str().c_str());
-    pt_Smear.DrawLatexNDC(0.2,0.45, out_smear.str().c_str());
+    //pt_Smear.DrawLatexNDC(0.2,0.45, out_smear.str().c_str());
     //pt_Stddev.DrawLatexNDC(0.2,0.35, out_stddev.str().c_str());
   }
   c->RedrawAxis();
