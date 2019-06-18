@@ -19,7 +19,7 @@ TH1D *createShifthisto(TString sample,TTree *tree,float intLumi,TString cuts,
                        int color, int style,TString name,bool norm,bool data);
 void setTDRStyle();
 
-void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, TString whichbit, bool pass, int bins,float xmin,float xmax) {
+void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, TString whichbit, bool pass, int bins,float xmin,float xmax,float scalesf) {
 
   TString passstr = "pass"; if (pass) { passstr = "pass"; } else { passstr = "fail"; }
   TString name = object+"_"+algo+"_"+wp+"_"+whichbit+"_"+ptrange+"_"+passstr;
@@ -110,18 +110,19 @@ void makeSFTemplates(TString object, TString algo, TString wp, TString ptrange, 
 
   // scale systematics
   TH1D *h_p2_scalecentral = createShifthisto(name,samples[0],intLumi,cuts[1],
-					     1,
+					     0,
 					     bins,xmin,xmax,kRed+1,1,"catp2_central",false,false); h_p2_scalecentral->SetFillColor(0);
   TH1D *h_p2_scaleup = createShifthisto(name,samples[0],intLumi,cuts[1],
-					1.05,
+					scalesf,
 					bins,xmin,xmax,kRed+1,1,"catp2_scaleUp",false,false); h_p2_scaleup->SetFillColor(0);
   TH1D *h_p2_scaledn = createShifthisto(name,samples[0],intLumi,cuts[1],
-					0.95,
+					-scalesf,
 					bins,xmin,xmax,kRed+1,1,"catp2_scaleDown",false,false); h_p2_scaledn->SetFillColor(0);
   std::cout << "central " << h_p2_scalecentral->Integral() << " up " <<h_p2_scaleup->Integral() << " dn " << h_p2_scaledn->Integral() << std::endl;
-  // uf-reweight
-  h_p2_scaleup->Scale(h_p2_scalecentral->Integral()/h_p2_scaleup->Integral()); 
-  h_p2_scaledn->Scale(h_p2_scalecentral->Integral()/h_p2_scaledn->Integral());
+  // uf-rescale
+  //h_p2_scaleup->Scale(1.+scalesf);
+  //h_p2_scaledn->Scale(1/(1.+scalesf));
+  //std::cout << "new central " << h_p2_scalecentral->Integral() << " up " <<h_p2_scaleup->Integral() << " dn " << h_p2_scaledn->Integral() << std::endl;
 
   //pileup systematics
   TH1D *h_p2_puup = create1Dhisto(name,samples[0],lumi,cuts[1],"Puppijet0_msd",bins,xmin,xmax,false,kRed+1,1,"catp2_puUp",false,false);   h_p2_puup->SetFillColor(0);
@@ -232,7 +233,8 @@ TH1D *createShifthisto(TString sample,TTree *tree,float intLumi,TString cuts,
       if (!data) {
 	newweight = weight * intLumi;
       }
-      float mass = shift * msd;
+      //float mass = shift * msd;
+      float mass = msd + shift;
       hTemp->Fill(mass, newweight);
     }
   }

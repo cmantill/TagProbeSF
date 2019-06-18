@@ -99,6 +99,7 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
     h_central->SetLineWidth(3); h_central->SetLineColor(1);  h_central->Draw("HIST");
     h_scaleUp->SetLineWidth(3); h_scaleUp->SetLineColor(2);  h_scaleUp->Draw("HIST sames");
     h_scaleDown->SetLineWidth(3); h_scaleDown->SetLineColor(3);  h_scaleDown->Draw("HIST sames");
+    std::cout << " central " << h_central->Integral() << " scaleup " << h_scaleUp->Integral() << " scaledn " << h_scaleDown->Integral() << std::endl;
     c2->SaveAs(path2file+"/plots_datamc/scale_"+category+".pdf");
     c2->Print(path2file+"/plots_datamc/scale_"+category+".pdf");
     c2->RedrawAxis();
@@ -238,8 +239,8 @@ void makeDataMCPlotsFromCombine(TString path2file, TString filename, TString sco
   std::ostringstream out_shift;
   if(scaledat>0){
     double Shift, ShiftErr; getSF(r, strShift, Shift, ShiftErr);
-    //out_shift << fixed << setprecision(3) << "Shift = " << (80.379+scaleval*scaledat*Shift)/80.379 << "  +" << scaleval*scaledat*ShiftErr/80.379 << " -" << ShiftErr*scaleval*scaledat/80.379;
-    out_shift << fixed << setprecision(3) << "Shift = " << Shift << "  +" << ShiftErr << " -" << ShiftErr;
+    out_shift << fixed << setprecision(3) << "Shift = " << (80.379+scaleval*scaledat*Shift)/80.379 << "  +" << scaleval*scaledat*ShiftErr/80.379 << " -" << ShiftErr*scaleval*scaledat/80.379;
+    //out_shift << fixed << setprecision(3) << "Shift = " << Shift << "  +" << ShiftErr << " -" << ShiftErr;
     std::cout << "scale " << out_shift.str() << std::endl;
     std::cout << "shift " << Shift*scaleval*scaledat << " and from combine " << Shift <<std::endl;
   }

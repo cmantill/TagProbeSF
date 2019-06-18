@@ -27,8 +27,8 @@ do
     nbins=20
     xmin=50
     xmax=120
-    cmdpass=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'","'${whichbit}'",true,'${nbins}','${xmin}','${xmax}')')
-    cmdfail=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'","'${whichbit}'",false,'${nbins}','${xmin}','${xmax}')')
+    cmdpass=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'","'${whichbit}'",true,'${nbins}','${xmin}','${xmax}','${scale}')')
+    cmdfail=$(echo 'makeSFTemplates.C("'${object}'","'${algo}'","'${wp}'","'${ptrange}'","'${whichbit}'",false,'${nbins}','${xmin}','${xmax}','${scale}')')
     root -l -q ${cmdpass}
     root -l -q ${cmdfail}
 
@@ -75,4 +75,4 @@ do
     root -l -q ${cmdmake}
 done
 
-mv T_n2/ T_n2_scale${scale}_${scaledat}_smear${smear}_${smeardat}/
+mv T_n2/ T_n2_scale${scale}gev_${scaledat}_smear${smear}_${smeardat}/
