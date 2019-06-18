@@ -1,4 +1,4 @@
-void makeSFDatacard(std::string inputname) {
+void makeSFDatacard(std::string inputname, float scale, float smear) {
 
   TFile *fpass = TFile::Open((TString)inputname+"_pass.root","READONLY");
   TFile *ffail = TFile::Open((TString)inputname+"_fail.root","READONLY");
@@ -34,8 +34,12 @@ void makeSFDatacard(std::string inputname) {
   std::cout << "lumi    lnN    1.023  1.023  1.023  1.023\n";
   std::cout << "jecs    lnN    1.02   1.02   1.02   1.02 \n";
   std::cout << "pu      lnN    1.05   1.05   1.05   1.05 \n";
-  std::cout << "scale  shapeU   1      -     1      -  \n";
-  std::cout << "smear  shapeU   0.1      -    0.1      -  \n";
+  if(scale>0){
+    std::cout << "scale  shapeU   " << scale << "     -     " << scale << "      -  \n";
+  }
+  if(smear>0){
+    std::cout << "smear  shapeU   " << smear << "     -     " << smear << "      -  \n";
+  }
   std::cout << "*  autoMCStats  0\n";
   
 }
